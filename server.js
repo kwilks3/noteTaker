@@ -1,8 +1,9 @@
 var express = require("express");
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8000;
 var path = require("path");
 var notesData = require("./db/db");
+var Store = require("./db/store");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,9 +22,16 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.post("/api/notes", (req, res) => {
-  // notesData.push(req.body);
-  console.log(req.body);
+  Store.saveNotes(req.body);
 });
+
+app.delete("/api/notes/:id", function (req, res) {
+  // var found = Store.getNotes();
+  // var test = found.find((element) => element === req.params.id);
+  // Store.write(notesData);
+  console.log();
+});
+
 app.listen(PORT, function () {
   console.log("listening on PORT " + PORT);
 });
